@@ -6,12 +6,12 @@ import java.util.*;
  * recherche. Les éléments sont ordonnés soit en utilisant l'ordre naturel (cf
  * Comparable) soit avec un Comparator fourni à la création.
  * </p>
- * 
+ *
  * <p>
  * Certaines méthodes de AbstractCollection doivent être surchargées pour plus
  * d'efficacité.
  * </p>
- * 
+ *
  * @param <E>
  *            le type des clés stockées dans l'arbre
  */
@@ -25,18 +25,20 @@ public class ABR<E> extends AbstractCollection<E> {
 		Noeud gauche;
 		Noeud droit;
 		Noeud pere;
+		char couleur;
 
 		Noeud(E cle) {
 			this.cle = cle;
 			this.droit = null;
 			this.gauche = null;
 			this.pere = null;
+			couleur = 'R';
 		}
 
 		/**
 		 * Renvoie le noeud contenant la clé minimale du sous-arbre enraciné
 		 * dans ce noeud
-		 * 
+		 *
 		 * @return le noeud contenant la clé minimale du sous-arbre enraciné
 		 *         dans ce noeud
 		 */
@@ -50,7 +52,7 @@ public class ABR<E> extends AbstractCollection<E> {
 
 		/**
 		 * Renvoie le successeur de ce noeud
-		 * 
+		 *
 		 * @return le noeud contenant la clé qui suit la clé de ce noeud dans
 		 *         l'ordre des clés, null si c'es le noeud contenant la plus
 		 *         grande clé
@@ -78,7 +80,7 @@ public class ABR<E> extends AbstractCollection<E> {
 
 		@Override
 		public int hashCode() {
-		return Objects.hash(cle);
+			return Objects.hash(cle);
 		}
 	}
 
@@ -96,7 +98,7 @@ public class ABR<E> extends AbstractCollection<E> {
 	/**
 	 * Crée un arbre vide. Les éléments sont comparés selon l'ordre imposé par
 	 * le comparateur
-	 * 
+	 *
 	 * @param cmp
 	 *            le comparateur utilisé pour définir l'ordre des éléments
 	 */
@@ -109,7 +111,7 @@ public class ABR<E> extends AbstractCollection<E> {
 	/**
 	 * Constructeur par recopie. Crée un arbre qui contient les mêmes éléments
 	 * que c. L'ordre des éléments est l'ordre naturel.
-	 * 
+	 *
 	 * @param c
 	 *            la collection à copier
 	 */
@@ -151,7 +153,7 @@ public class ABR<E> extends AbstractCollection<E> {
 	/**
 	 * Recherche une clé. Cette méthode peut être utilisée par
 	 * {@link #contains(Object)} et {@link #remove(Object)}
-	 * 
+	 *
 	 * @param o
 	 *            la clé à chercher
 	 * @return le noeud qui contient la clé ou null si la clé n'est pas trouvée.
@@ -172,7 +174,7 @@ public class ABR<E> extends AbstractCollection<E> {
 	/**
 	 * Supprime le noeud z. Cette méthode peut être utilisée dans
 	 * {@link #remove(Object)} et {@link Iterator#remove()}
-	 * 
+	 *
 	 * @param z
 	 *            le noeud à supprimer
 	 * @return le noeud contenant la clé qui suit celle de z dans l'ordre des
@@ -183,42 +185,42 @@ public class ABR<E> extends AbstractCollection<E> {
 		Noeud y;
 		Noeud x;
 		if (z.gauche == null || z.droit == null){
-    		y = z;
+			y = z;
 		}
-  		else{
+		else{
 			y = z.suivant();
 		}
-  		// y est le nœud à détacher
+		// y est le nœud à détacher
 
 		if(y == null){
 			return null;
 		}
 
-  		if (y.gauche != null) {
+		if (y.gauche != null) {
 			x = y.gauche;
 		}
-  		else {
+		else {
 			x = y.droit;
 		}
-  		// x est le fils unique de y ou null si y n'a pas de fils
+		// x est le fils unique de y ou null si y n'a pas de fils
 
-  		if (x != null) {
-  			x.pere = y.pere;
-  		}
+		if (x != null) {
+			x.pere = y.pere;
+		}
 
-  		if (y.pere == null) { // suppression de la racine
-  			this.racine = x;
-  		} else {
-    		if (y.equals(y.pere.gauche)) {
+		if (y.pere == null) { // suppression de la racine
+			this.racine = x;
+		} else {
+			if (y.equals(y.pere.gauche)) {
 				y.pere.gauche = x;
 			}
-    		else {
+			else {
 				y.pere.droit = x;
 			}
-  		}
+		}
 
-  		if (!y.equals(z)) {
-  			z.cle = y.cle;
+		if (!y.equals(z)) {
+			z.cle = y.cle;
 		}
 		this.taille--;
 		return z.suivant();
@@ -244,6 +246,7 @@ public class ABR<E> extends AbstractCollection<E> {
 
 		if( y == null )
 		{
+			z.couleur = 'N';
 			racine = z;
 		}
 		else
@@ -253,8 +256,50 @@ public class ABR<E> extends AbstractCollection<E> {
 		}
 
 		z.gauche = z.droit = null;
+		ajouterCorrection(z);
 		taille++;
 		return true;
+	}
+
+
+	private void ajouterCorrection(Noeud z) {
+		/*Noeud y;
+		while (z.pere.couleur == 'R') {
+			// (*) La seule propriété RN violée est (4) : z et z.pere sont rouges
+			if (z.pere == z.pere.pere.gauche) {
+				y = z.pere.pere.droit; // l'oncle de z
+				if (y.couleur == 'R') {
+					// cas 1
+					z.pere.couleur = 'N';
+					y.couleur = 'N';
+					z.pere.pere.couleur = 'R';
+					z = z.pere.pere;
+				} else {
+					if (z == z.pere.droit) {
+						// cas 2
+						z = z.pere;
+						rotationGauche(z);
+					}
+					// cas 3
+					z.pere.couleur = 'N';
+					z.pere.pere.couleur = 'R';
+					rotationDroite(z.pere.pere);
+				}
+			} else {
+				// idem en miroir, gauche <-> droite
+				// cas 1', 2', 3'
+			}
+		}
+		// (**) La seule propriété (potentiellement) violée est (2)
+		racine.couleur = 'N';
+	*/}
+
+	private void rotationGauche(Noeud n) {
+		// T1 -> T2
+	}
+
+	private  void rotationDroite(Noeud n) {
+		// T2 -> T1
 	}
 
 	@Override
@@ -275,27 +320,27 @@ public class ABR<E> extends AbstractCollection<E> {
 	private class ABRIterator implements Iterator<E> {
 		Noeud courant;
 
-		 ABRIterator(){
+		ABRIterator(){
 			Noeud courant = racine;
 		}
 
 		public boolean hasNext() {
-		return courant != null;
+			return courant != null;
 		}
 
 		public E next() {
-		 	E tmp;
-		 	if (courant == null){
-		 		return null;
+			E tmp;
+			if (courant == null){
+				return null;
 			}
-		 	tmp = courant.cle;
+			tmp = courant.cle;
 			this.courant.suivant();
 
 			return tmp;
 		}
 
 		public void remove() {
-		this.courant = ABR.this.supprimer(courant);
+			this.courant = ABR.this.supprimer(courant);
 		}
 	}
 
@@ -322,8 +367,11 @@ public class ABR<E> extends AbstractCollection<E> {
 				c = '|';
 			buf.append(c);
 		}
-
-		buf.append("-- " + x.cle.toString());
+		if (x.couleur == 'R') {
+			buf.append("-- " + "\u001B[31m" + x.cle.toString() + "\u001B[0m");
+		} else {
+			buf.append("-- " + x.cle.toString());
+		}
 		if (x.gauche != null || x.droit != null) {
 			buf.append(" --");
 			for (int j = x.cle.toString().length(); j < len; j++)
