@@ -1,27 +1,132 @@
-public class ABRTest extends ABR {
-	public static void main(String[] args) {
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Random;
 
-		ABR<Integer> arbre = new ABR();
-		arbre.add(23);
-		arbre.add(18);
-		arbre.add(42);
-		arbre.add(60);
-		arbre.add(38);
-		arbre.add(12);
-		arbre.add(2);
-		arbre.add(30);
-		arbre.add(12);
-		arbre.add(6);
-		arbre.add(43);
-		arbre.add(64);
-		arbre.add(128);
-		System.out.println(arbre);
-		/*arbre.remove(2);
-		System.out.println(arbre);
-		arbre.remove(42);
-		System.out.println(arbre);
-		arbre.remove(23);
-		System.out.println(arbre);*/
 
-	}
+
+public class ABRTest {
+
+    public static void main(String[] args) {
+        testRandom();
+    }
+
+    static void test1() {
+
+        ArrayList<Integer> l = new ArrayList<>();
+        //ARN<Integer> abr = new ARN<>();
+        l.add(5);
+        l.add(8);
+        l.add(2);
+        l.add(9);
+        l.add(-2);
+        l.add(-3);
+        l.add(0);
+        l.add(1);
+        l.add(2000);
+        l.add(-2000);
+        l.add(500);
+        l.add(501);
+        //l.add(1200);
+        ABR<Integer> abr = new ABR<>(l);
+        System.out.println(abr.size());
+        System.out.println(abr);
+        Iterator<Integer> it = abr.iterator();
+        while (it.hasNext()) {
+            int cle = it.next();
+            if (cle % 2 == 0) {
+                System.out.println("Supprimons " + cle + " dont le suivant est :");
+                it.remove();
+                System.out.println("taille" + abr.size());
+                System.out.println(abr);
+            }
+        }
+        System.out.println(abr.size());
+        System.out.println(abr);
+        abr.remove(5);
+        System.out.println(abr.size());
+        System.out.println(abr);
+        abr.remove(501);
+        System.out.println(abr.size());
+        System.out.println(abr);
+        abr.remove(9);
+        System.out.println(abr.size());
+        System.out.println(abr);
+        abr.remove(1);
+        System.out.println(abr.size());
+        System.out.println(abr);
+        abr.remove(-3);
+        System.out.println(abr.size());
+        System.out.println(abr);
+    }
+
+    static void test2() {
+        ABR<Integer> arn = new ABR<>();
+        arn.add(13);
+        arn.add(8);
+        arn.add(17);
+        arn.add(1);
+        arn.add(11);
+        arn.add(15);
+        arn.add(25);
+        arn.add(6);
+        arn.add(22);
+        arn.add(27);
+        System.out.println(arn);
+        arn.remove(17);
+        System.out.println(arn);
+        arn.remove(22);
+        System.out.println(arn);
+        arn.remove(25);
+        System.out.println(arn);
+    }
+
+    static void test3() {
+        ABR<Integer> arn = new ABR<>();
+        arn.add(13);
+        arn.add(8);
+        arn.add(17);
+        arn.add(1);
+        arn.add(11);
+        arn.add(15);
+        arn.add(25);
+        arn.add(6);
+        arn.add(22);
+        arn.add(27);
+        System.out.println(arn);
+        arn.remove(8);
+        System.out.println(arn);
+    }
+
+    static void test4() {
+        ABR<Integer> arn = new ABR<>();
+        arn.add(0);
+        System.out.println(arn);
+        arn.add(-1);
+        System.out.println(arn);
+        arn.add(-2);
+        System.out.println(arn);
+        arn.add(-3);
+        System.out.println(arn);
+        arn.add(1);
+        System.out.println(arn);
+        arn.add(2);
+        System.out.println(arn);
+        arn.add(3);
+        System.out.println(arn);
+        arn.remove(-1);
+        System.out.println(arn);
+    }
+
+    static void testRandom() {
+        ABR<Integer> arn = new ABR<>();
+        Random r = new Random();
+        for(int i = 0; i < 10; i++) {
+            arn.add(r.nextInt(200));
+        }
+        System.out.println(arn);
+        for(int i = 0; i < 10; i++) {
+            arn.remove(r.nextInt(200));
+        }
+        System.out.println(arn);
+    }
 }
