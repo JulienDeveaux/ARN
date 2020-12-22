@@ -176,27 +176,26 @@ public class ABR<E> extends AbstractCollection<E> {
         return x;
     }
 
-    /**
-     * Supprime le noeud z. Cette méthode peut être utilisée dans
-     * {@link #remove(Object)} et {@link Iterator#remove()}
-     *
-     * @param z
-     *            le noeud à supprimer
-     * @return le noeud contenant la clé qui suit celle de z dans l'ordre des
-     *         clés. Cette valeur de retour peut être utile dans
-     *         {@link Iterator#remove()}
-     */
-    private Noeud supprimer(Noeud z) {
-        Noeud y;
-        Noeud x;
-
-        if (z.gauche == sentinelle || z.droit == sentinelle){
-            y = z;
-        }
-        else{
-            y = z.suivant();
-        }
-        // y est le nœud à détacher
+	/**
+	 * Supprime le noeud z. Cette méthode peut être utilisée dans
+	 * {@link #remove(Object)} et {@link Iterator#remove()}
+	 *
+	 * @param z
+	 *            le noeud à supprimer
+	 * @return le noeud contenant la clé qui suit celle de z dans l'ordre des
+	 *         clés. Cette valeur de retour peut être utile dans
+	 *         {@link Iterator#remove()}
+	 */
+	private Noeud supprimer(Noeud z) {
+		Noeud y;
+		Noeud x;
+		if (z.gauche == null || z.droit == null){
+			y = z;
+		}
+		else{
+			y = z.suivant();
+		}
+		// y est le nœud à détacher
 
         if(y == null){
             return null;
@@ -275,48 +274,48 @@ public class ABR<E> extends AbstractCollection<E> {
     }
 
 
-    private void ajouterCorrection(Noeud z) {
-        Noeud y;
-        while (z.pere.couleur == 'R') {
-            // (*) La seule propriété RN violée est (4) : z et z.pere sont rouges
-            if (z.pere == z.pere.pere.gauche) {
-                y = z.pere.pere.droit; // l'oncle de z
-                if (y.couleur == 'R') {
-                    // cas 1
-                    z.pere.couleur = 'N';
-                    y.couleur = 'N';
-                    z.pere.pere.couleur = 'R';
-                    z = z.pere.pere;
-                } else {
-                    if (z == z.pere.droit) {
-                        // cas 2
-                        z = z.pere;
-                        rotationGauche(z);
-                    }
-                    // cas 3
-                    z.pere.couleur = 'N';
-                    z.pere.pere.couleur = 'R';
-                    rotationDroite(z.pere.pere);
-                }
-            } else {
-                y = z.pere.pere.gauche; // l'oncle de z
-                if (y.couleur == 'R') {
-                    // cas 1
-                    z.pere.couleur = 'N';
-                    y.couleur = 'N';
-                    z.pere.pere.couleur = 'R';
-                    z = z.pere.pere;
-                } else {
-                    if (z == z.pere.droit) {
-                        // cas 2
-                        z = z.pere;
-                        rotationGauche(z);
-                    }
-                    // cas 3
-                    z.pere.couleur = 'N';
-                    z.pere.pere.couleur = 'R';
-                    rotationDroite(z.pere.pere);
-                }
+	private void ajouterCorrection(Noeud z) {
+		Noeud y;
+		while (z.pere.couleur == 'R') {
+			// (*) La seule propriété RN violée est (4) : z et z.pere sont rouges
+			if (z.pere == z.pere.pere.gauche) {
+				y = z.pere.pere.droit; // l'oncle de z
+				if (y.couleur == 'R') {
+					// cas 1
+					z.pere.couleur = 'N';
+					y.couleur = 'N';
+					z.pere.pere.couleur = 'R';
+					z = z.pere.pere;
+				} else {
+					if (z == z.pere.droit) {
+						// cas 2
+						z = z.pere;
+						rotationGauche(z);
+					}
+					// cas 3
+					z.pere.couleur = 'N';
+					z.pere.pere.couleur = 'R';
+					rotationDroite(z.pere.pere);
+				}
+			} else {
+				y = z.pere.pere.gauche; // l'oncle de z
+				if (y.couleur == 'R') {
+					// cas 1
+					z.pere.couleur = 'N';
+					y.couleur = 'N';
+					z.pere.pere.couleur = 'R';
+					z = z.pere.pere;
+				} else {
+					if (z == z.pere.gauche) {
+						// cas 2
+						z = z.pere;
+						rotationDroite(z);
+					}
+					// cas 3
+					z.pere.couleur = 'N';
+					z.pere.pere.couleur = 'R';
+					rotationGauche(z.pere.pere);
+				}
 
                 // idem en miroir, gauche <-> droite
                 // cas 1', 2', 3'
@@ -326,47 +325,47 @@ public class ABR<E> extends AbstractCollection<E> {
         racine.couleur = 'N';
     }
 
-    private void rotationGauche(Noeud x) {
-        Noeud y = x.droit;
-        x.droit = y.gauche;
-        if(y.gauche != sentinelle){
-            y.gauche.pere = x;
-        }
-        y.pere = x.pere;
+	private void rotationGauche(Noeud x) {
+		Noeud y = x.droit;
+		x.droit = y.gauche;
+		if(y.gauche != sentinelle){
+			y.gauche.pere = x;
+		}
+		y.pere = x.pere;
 
-        if(x.pere == sentinelle){
-            this.racine = y;
-        }
-        else if(x == x.pere.gauche){
-            x.pere.gauche = y;
-        }
-        else {
-            x.pere.droit = y;
-        }
-        y.gauche = x;
-        x.pere = y;
-    }
+		if(x.pere == sentinelle){
+			this.racine = y;
+		}
+		else if(x == x.pere.gauche){
+			x.pere.gauche = y;
+		}
+		else {
+			x.pere.droit = y;
+		}
+		y.gauche = x;
+		x.pere = y;
+	}
 
-    private  void rotationDroite(Noeud x){
-        Noeud y = x.gauche;
-        System.out.println(y.cle);
-        x.gauche = y.droit;
-        if(y.droit != sentinelle){
-            y.droit.pere = x;
-        }
-        y.pere = x.pere;
-        if (x.pere == sentinelle){
-            this.racine = y;
-        }
-        else if (x == x.pere.gauche){
-            x.pere.gauche = y;
-        }
-        else {
-            x.pere.droit = y;
-        }
-        y.droit = x;
-        x.pere = y;
-    }
+	private  void rotationDroite(Noeud x){
+		Noeud y = x.gauche;
+		x.gauche = y.droit;
+		if(y.gauche != sentinelle){
+			y.gauche.pere = x;
+		}
+		y.pere = x.pere;
+		if (x.pere == sentinelle){
+			this.racine = y;
+		}
+		else if (x == x.pere.droit){
+			x.pere.droit = y;
+		}
+		else {
+			// avant : else x.pere.droit = y;
+			x.pere.gauche = y;
+		}
+		y.droit = x;
+		x.pere = y;
+	}
 
     @Override
     public boolean addAll(Collection<? extends E> c)
