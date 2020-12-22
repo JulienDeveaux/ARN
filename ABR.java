@@ -268,6 +268,9 @@ public class ABR<E> extends AbstractCollection<E> {
 
 		z.gauche = z.droit = sentinelle;
 		z.couleur = 'R';
+		System.out.println("-------------------------------------");
+		System.out.println("Ajout de la clé : " + e);
+		System.out.println(this);
 		ajouterCorrection(z);
 		taille++;
 		return true;
@@ -306,15 +309,15 @@ public class ABR<E> extends AbstractCollection<E> {
 					z.pere.pere.couleur = 'R';
 					z = z.pere.pere;
 				} else {
-					if (z == z.pere.droit) {
+					if (z == z.pere.gauche) {
 						// cas 2
 						z = z.pere;
-						rotationGauche(z);
+						rotationDroite(z);
 					}
 					// cas 3
 					z.pere.couleur = 'N';
 					z.pere.pere.couleur = 'R';
-					rotationDroite(z.pere.pere);
+					rotationGauche(z.pere.pere);
 				}
 
 				// idem en miroir, gauche <-> droite
@@ -328,12 +331,12 @@ public class ABR<E> extends AbstractCollection<E> {
 	private void rotationGauche(Noeud x) {
 		Noeud y = x.droit;
 		x.droit = y.gauche;
-		if(y.gauche != noeudNul){
+		if(y.gauche != sentinelle){
 			y.gauche.pere = x;
 		}
 		y.pere = x.pere;
 
-		if(x.pere == noeudNul){
+		if(x.pere == sentinelle){
 			this.racine = y;
 		}
 		else if(x == x.pere.gauche){
@@ -349,18 +352,19 @@ public class ABR<E> extends AbstractCollection<E> {
 	private  void rotationDroite(Noeud x){
 		Noeud y = x.gauche;
 		x.gauche = y.droit;
-		if(y.droit != noeudNul){
-			y.droit.pere = x;
+		if(y.gauche != sentinelle){
+			y.gauche.pere = x;
 		}
 		y.pere = x.pere;
-		if (x.pere == noeudNul){
+		if (x.pere == sentinelle){
 			this.racine = y;
 		}
-		else if (x == x.pere.gauche){
-			x.pere.gauche = y;
+		else if (x == x.pere.droit){
+			x.pere.droit = y;
 		}
 		else {
-			x.pere.droit = y;
+			// avant : else x.pere.droit = y;
+			x.pere.gauche = y;
 		}
 		y.droit = x;
 		x.pere = y;
