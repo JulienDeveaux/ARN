@@ -18,7 +18,6 @@ import java.util.*;
 public class ABR<E> extends AbstractCollection<E> {
 	private Noeud racine;
 	private Noeud sentinelle;
-	int taille;
 	private Comparator<? super E> cmp;
 	public Noeud noeudNul = new Noeud(null);
 
@@ -154,14 +153,13 @@ public class ABR<E> extends AbstractCollection<E> {
 	}
 
 	@Override
-	public int size() {
-		Noeud n = racine;
-		while (n != sentinelle) {
-			if(n.couleur == 'N')
-				taille++;
-			n = n.gauche;
+	public int size() {return size(racine);}
+
+	private int size(Noeud r) {
+		if(r == sentinelle) {
+			return 0;
 		}
-		return taille;
+		return size(r.gauche) + 1 + size(r.droit);
 	}
 
 	@Override
