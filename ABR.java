@@ -1,4 +1,5 @@
 import java.util.*;
+import java.math.*;
 
 /**
  * <p>
@@ -19,7 +20,6 @@ public class ABR<E> extends AbstractCollection<E> {
 	private Noeud racine;
 	private Noeud sentinelle;
 	private Comparator<? super E> cmp;
-	public Noeud noeudNul = new Noeud(null);
 
 	private class Noeud {
 		E cle;
@@ -106,6 +106,7 @@ public class ABR<E> extends AbstractCollection<E> {
 	 *			le comparateur utilisé pour définir l'ordre des éléments
 	 */
 	public ABR(Comparator<? super E> cmp) {
+		sentinelle =  sentinelle();
 		racine = null;
 		this.cmp = cmp;
 	}
@@ -118,32 +119,11 @@ public class ABR<E> extends AbstractCollection<E> {
 	 *			la collection à copier
 	 */
 	public ABR(Collection<? extends E> c) {
-		if(c.isEmpty()) {
-			racine = null;
-			cmp = (e1, e2) -> ((Comparable<E>)e1).compareTo(e2);
-		} else {
-			Iterator it = c.iterator();
-			Noeud n = new Noeud((E)it.next());
-			racine = n;
-			racine.droit = sentinelle;
-			racine.gauche = sentinelle;
-			while(it.hasNext()) {
-				E t = (E)it.next();
-				System.out.println("RACINE : " + racine.cle);
-				System.out.println("AJOUT DE : " + t);
-				this.add(t);
-			}
-			cmp = (e1, e2) -> ((Comparable<E>)e1).compareTo(e2);
-
-
-
-			/*for(E e : c) {
-				//taille ++;
-			}
-			E t = c.iterator().next();
-			Noeud n = new Noeud(t);
-			racine = n;
-			cmp = (e1, e2) -> ((Comparable<E>)e1).compareTo(e2);*/
+		this();
+		Iterator it = c.iterator();
+		while(it.hasNext()) {
+			E t = (E)it.next();
+			this.add(t);
 		}
 	}
 
@@ -160,6 +140,51 @@ public class ABR<E> extends AbstractCollection<E> {
 			return 0;
 		}
 		return size(r.gauche) + 1 + size(r.droit);
+	}
+
+	public int diametre() {
+		return diametre(racine); 
+	}
+
+	private int diametre(Noeud r) {
+		if(r == sentinelle || r == null) {
+			return 0;
+		}
+		int hauteurgauche = hauteur(r.gauche);
+		int hauteurdroite = hauteur(r.droit);
+
+		int diametregauche = diametre(r.gauche);
+		int diametredroit = diametre(r.droit);
+		return Math.max(hauteurgauche + hauteurdroite + 1, Math.max(diametregauche, diametredroit));
+	}
+
+	public int hauteur() {
+		return hauteur(racine);
+	}
+
+	private int hauteur(Noeud r) {
+		if(r == sentinelle || r == null) {
+			return 0;
+		}
+		return (1 + Math.max(hauteur(r.gauche), hauteur(r.droit)));
+	}
+
+	public int profondeur() {
+		return profondeur(racine); 
+	}
+
+	private int profondeur(Noeud r) {
+		if(r == sentinelle || r == null) {
+			return 0;
+		}
+		int profondeurgauche = profondeur(r.gauche);
+		int profondeurdroit = profondeur(r.droit);
+
+		if(profondeurgauche > profondeurdroit) {
+			return (profondeurgauche + 1);
+		} else {
+			return (profondeurdroit + 1);
+		}
 	}
 
 	@Override
