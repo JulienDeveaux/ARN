@@ -235,7 +235,8 @@ public class ABR<E> extends AbstractCollection<E> {
 	 *		 {@link Iterator#remove()}
 	 */
 	private Noeud supprimer(Noeud z) {
-		Noeud x, y = z;
+		Noeud y = z;
+		Noeud x;
 		char yOriginal = y.couleur;
 
 		if(z.gauche == sentinelle) {
@@ -261,7 +262,7 @@ public class ABR<E> extends AbstractCollection<E> {
 			y.gauche.pere = y;
 			y.couleur = z.couleur;
 		}
-		if(yOriginal != 'R') {
+		if(yOriginal == 'R') {
 			this.supprimerfix(x);
 		}
 		return z.suivant();
