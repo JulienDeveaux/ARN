@@ -7,27 +7,25 @@ import java.util.Random;
 public class ABRTest {
 
 	public static void main(String[] args) {
-		//System.out.println("TEST RANDOM");testRandom();
-		//System.out.println("TEST 1");test1();
-		//System.out.println("TEST 2");test2();
-		//System.out.println("TEST 3");test3();
-		//System.out.println("TEST 4");test4();
+		System.out.println("TEST RANDOM");testRandom();
+		System.out.println("TEST 1");test1();
+		System.out.println("TEST 2");test2();
+		System.out.println("TEST 3");test3();
+		System.out.println("TEST 4");test4();
+        System.out.println("CUSTOM");
         ABR<Integer> arn = new ABR<>();
-        arn.add(13);
-        arn.add(8);
-        arn.add(17);
         arn.add(1);
-        arn.add(11);
-        arn.add(15);
-        arn.add(25);
-        arn.add(6);
-        arn.add(22);
-        arn.add(27);
         System.out.println(arn);
-        System.out.println("taille (nb de noeuds) : " + arn.size());
-        System.out.println("profondeur mas de l'arbre : " + arn.profondeur());
-        System.out.println("hauteur : " + arn.hauteur());
-        System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
+        arn.add(2);
+        System.out.println(arn);
+        arn.add(0);
+        System.out.println(arn);
+        arn.add(3);
+        System.out.println(arn);
+        arn.add(4);
+        System.out.println(arn);
+        arn.add(1);
+        System.out.println(arn);
     }
 
 	static void test1() {
@@ -47,39 +45,44 @@ public class ABRTest {
 		l.add(500);
 		l.add(501);
 		//l.add(1200);
-		ABR<Integer> abr = new ABR<>(l);
-		System.out.println("taille : " + abr.size());
-        System.out.println("profondeur : " + abr.profondeur());
-		System.out.println(abr);
-		Iterator<Integer> it = abr.iterator();
+		ABR<Integer> arn = new ABR<>(l);
+		System.out.println("taille : " + arn.size());
+        System.out.println("profondeur : " + arn.profondeur());
+		System.out.println(arn);
+
+		Iterator<Integer> it = arn.iterator();
+
 		while (it.hasNext()) {
 			int cle = it.next();
             System.out.println("DANS LE WHILE");
 			if (cle % 2 == 0) {
 				System.out.println("Supprimons " + cle + " dont le suivant est :");
 				it.remove();
-				System.out.println("taille : " + abr.size());
-				System.out.println(abr);
+				System.out.println("taille : " + arn.size());
+				System.out.println(arn);
 			}
 		}
 		System.out.println("SORTI DU WHILE");
-		System.out.println("taille : " + abr.size());
-		System.out.println(abr);
-		abr.remove(5);
-		System.out.println("taille : " + abr.size());
-		System.out.println(abr);
-		abr.remove(501);
-		System.out.println("taille : " + abr.size());
-		System.out.println(abr);
-		abr.remove(9);
-		System.out.println("taille : " + abr.size());
-		System.out.println(abr);
-		abr.remove(1);
-		System.out.println("taille : " + abr.size());
-		System.out.println(abr);
-		abr.remove(-3);
-		System.out.println("taille : " + abr.size());
-		System.out.println(abr);
+		System.out.println("taille : " + arn.size());
+		System.out.println(arn);
+		arn.remove(5);
+		System.out.println("taille : " + arn.size());
+		System.out.println(arn);
+		arn.remove(501);
+		System.out.println("taille : " + arn.size());
+		System.out.println(arn);
+		arn.remove(9);
+		System.out.println("taille : " + arn.size());
+		System.out.println(arn);
+		arn.remove(1);
+		System.out.println("taille : " + arn.size());
+		System.out.println(arn);
+		arn.remove(-3);
+        System.out.println(arn);
+        System.out.println("taille (nb de noeuds) : " + arn.size());
+        System.out.println("profondeur max de l'arbre : " + arn.profondeur());
+        System.out.println("hauteur : " + arn.hauteur());
+        System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 
 	static void test2() {
@@ -101,7 +104,10 @@ public class ABRTest {
 		System.out.println(arn);
 		arn.remove(25);
 		System.out.println(arn);
-		System.out.println("taille : " + arn.size());
+        System.out.println("taille (nb de noeuds) : " + arn.size());
+        System.out.println("profondeur max de l'arbre : " + arn.profondeur());
+        System.out.println("hauteur : " + arn.hauteur());
+        System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 
 	static void test3() {
@@ -116,10 +122,17 @@ public class ABRTest {
 		arn.add(6);
 		arn.add(22);
 		arn.add(27);
-		System.out.println(arn);
+        System.out.println(arn);
+        System.out.println("taille (nb de noeuds) : " + arn.size());
+        System.out.println("profondeur max de l'arbre : " + arn.profondeur());
+        System.out.println("hauteur : " + arn.hauteur());
+        System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 		arn.remove(8);
-		System.out.println(arn);
-		System.out.println("taille : " + arn.size());
+        System.out.println(arn);
+        System.out.println("taille (nb de noeuds) : " + arn.size());
+        System.out.println("profondeur max de l'arbre : " + arn.profondeur());
+        System.out.println("hauteur : " + arn.hauteur());
+        System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 
 	static void test4() {
@@ -138,9 +151,12 @@ public class ABRTest {
 		System.out.println(arn);
 		arn.add(3);
 		System.out.println(arn);
-		arn.remove(-1);
-		System.out.println(arn);
-		System.out.println("taille : " + arn.size());
+		arn.remove(-1);       //enlève tout
+        System.out.println(arn);
+        System.out.println("taille (nb de noeuds) : " + arn.size());
+        System.out.println("profondeur max de l'arbre : " + arn.profondeur());
+        System.out.println("hauteur : " + arn.hauteur());
+        System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 
 	static void testRandom() {
@@ -154,6 +170,9 @@ public class ABRTest {
 			arn.remove(r.nextInt(200));
 		}
 		System.out.println(arn);
-		System.out.println("taille : " + arn.size());
+        System.out.println("taille (nb de noeuds) : " + arn.size());
+        System.out.println("profondeur max de l'arbre : " + arn.profondeur());
+        System.out.println("hauteur : " + arn.hauteur());
+        System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 }

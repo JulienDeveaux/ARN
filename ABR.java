@@ -190,7 +190,14 @@ public class ABR<E> extends AbstractCollection<E> {
 	@Override
 	public boolean remove(Object o)
 	{
-		return this.supprimer( this.rechercher((E)o)) != sentinelle;
+		Noeud t = this.rechercher((E)o);
+		System.out.println("Supprimer : "+(E)o);
+		if(t != sentinelle) {
+			return this.supprimer( this.rechercher((E)o)) != sentinelle;
+		} else {
+			return false;
+		}
+		
 	}
 
 
@@ -228,6 +235,106 @@ public class ABR<E> extends AbstractCollection<E> {
 	 *		 {@link Iterator#remove()}
 	 */
 	private Noeud supprimer(Noeud z) {
+		Noeud x, y = z;
+		char yOriginal = y.couleur;
+
+		if(z.gauche == sentinelle) {
+			x = z.droit;
+			echange(z, z.gauche);
+		} else if(z.droit == sentinelle) {
+			x = z.gauche;
+			echange(z, z.gauche);
+		} else {
+			y = z.suivant();
+			yOriginal = y.couleur;
+			x = y.droit;
+
+			if(y.pere == z) {
+				x.pere = y;
+			} else {
+				echange(y, y.droit);
+				y.droit = z.droit;
+				y.droit.pere = y;
+			}
+			echange(z, y);
+			y.gauche = z.gauche;
+			y.gauche.pere = y;
+			y.couleur = z.couleur;
+		}
+		if(yOriginal != 'R') {
+			supprimerfix(x);
+		}
+		return z.suivant();
+	}
+
+	private void echange(Noeud x, Noeud y) {
+		if(x.pere == sentinelle) {
+			racine = y;
+		} else if (x == x.pere.gauche) {
+			x.pere.gauche = y;
+		} else {
+			x.pere.droit = y;
+		}
+		y.pere = x.pere;
+	}
+
+	private void supprimerfix(Noeud x) {
+		Noeud w;
+
+		while(x != racine && x.couleur != 'R') {
+			if(x == x.pere.gauche) {
+				w = x.pere.droit;
+				if(w.couleur == 'R') {
+					w.couleur = 'N';
+					x.pere.couleur = 'R';
+					rotationDroite(x.pere);
+					w = x.pere.droit;
+				}
+				if(w.gauche.couleur == 'N' && w.droit.couleur =='N') {
+					w.couleur = 'R';
+					x = x.pere;
+				} else {
+					if(w.droit.couleur != 'R') {
+						w.gauche.couleur = 'N';
+						w.couleur = 'R';
+						rotationDroite(w);
+						w = x.pere.droit;
+					}
+					w.couleur = x.pere.couleur;
+					x.pere.couleur = 'N';
+					w.droit.couleur = 'N';
+					rotationGauche(x.pere);
+					x = racine;
+				}
+			} else {
+				w = x.pere.gauche;
+				if(w.couleur == 'R') {
+					w.couleur = 'N';
+					x.pere.couleur = 'R';
+					rotationDroite(x.pere);
+					w = x.pere.gauche;
+				}
+				if(w.gauche.couleur != 'R' && w.droit.couleur != 'R') {
+					w.couleur = 'R';
+					x = x.pere;
+				} else {
+					if(w.gauche.couleur != 'R') {
+						w.droit.couleur = 'N';
+						w.couleur = 'R';
+						rotationGauche(w);
+						w = x.pere.gauche;
+					}
+					w.couleur = x.pere.couleur;
+					x.pere.couleur = 'N';
+					w.gauche.couleur = 'N';
+					rotationDroite(x.pere);
+					x = racine;
+				}
+			}
+		}
+		x.couleur = 'N';
+	}
+	/*private Noeud supprimer(Noeud z) {
 		if(z == sentinelle) {
 			return sentinelle;
 		}
@@ -328,7 +435,7 @@ public class ABR<E> extends AbstractCollection<E> {
 			racine.couleur = 'N';
 		}
 		return z.suivant();
-	}
+	}*/
 
 	public Noeud sentinelle(){
 		Noeud s = new Noeud(null);
@@ -341,6 +448,11 @@ public class ABR<E> extends AbstractCollection<E> {
 	public boolean add(E e)
 	{
 		if (e == null) return false;
+		Noeud t = this.rechercher(e);
+		if(t.cle == e) {
+			System.out.println("Noeud a ajouter déja dans l'arbre, annulation de l'ajout");
+			return false;
+		}
 		Noeud z = new Noeud(e);
 		Noeud y = sentinelle;
 		Noeud x = racine;
