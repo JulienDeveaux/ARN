@@ -240,10 +240,10 @@ public class ABR<E> extends AbstractCollection<E> {
 
 		if(z.gauche == sentinelle) {
 			x = z.droit;
-			echange(z, z.gauche);
+			this.echange(z, z.droit);
 		} else if(z.droit == sentinelle) {
 			x = z.gauche;
-			echange(z, z.gauche);
+			this.echange(z, z.gauche);
 		} else {
 			y = z.suivant();
 			yOriginal = y.couleur;
@@ -252,24 +252,24 @@ public class ABR<E> extends AbstractCollection<E> {
 			if(y.pere == z) {
 				x.pere = y;
 			} else {
-				echange(y, y.droit);
+				this.echange(y, y.droit);
 				y.droit = z.droit;
 				y.droit.pere = y;
 			}
-			echange(z, y);
+			this.echange(z, y);
 			y.gauche = z.gauche;
 			y.gauche.pere = y;
 			y.couleur = z.couleur;
 		}
 		if(yOriginal != 'R') {
-			supprimerfix(x);
+			this.supprimerfix(x);
 		}
 		return z.suivant();
 	}
 
 	private void echange(Noeud x, Noeud y) {
 		if(x.pere == sentinelle) {
-			racine = y;
+			this.racine = y;
 		} else if (x == x.pere.gauche) {
 			x.pere.gauche = y;
 		} else {
@@ -287,7 +287,7 @@ public class ABR<E> extends AbstractCollection<E> {
 				if(w.couleur == 'R') {
 					w.couleur = 'N';
 					x.pere.couleur = 'R';
-					rotationDroite(x.pere);
+					this.rotationDroite(x.pere);
 					w = x.pere.droit;
 				}
 				if(w.gauche.couleur == 'N' && w.droit.couleur =='N') {
@@ -297,13 +297,13 @@ public class ABR<E> extends AbstractCollection<E> {
 					if(w.droit.couleur != 'R') {
 						w.gauche.couleur = 'N';
 						w.couleur = 'R';
-						rotationDroite(w);
+						this.rotationDroite(w);
 						w = x.pere.droit;
 					}
 					w.couleur = x.pere.couleur;
 					x.pere.couleur = 'N';
 					w.droit.couleur = 'N';
-					rotationGauche(x.pere);
+					this.rotationGauche(x.pere);
 					x = racine;
 				}
 			} else {
@@ -311,7 +311,7 @@ public class ABR<E> extends AbstractCollection<E> {
 				if(w.couleur == 'R') {
 					w.couleur = 'N';
 					x.pere.couleur = 'R';
-					rotationDroite(x.pere);
+					this.rotationDroite(x.pere);
 					w = x.pere.gauche;
 				}
 				if(w.gauche.couleur != 'R' && w.droit.couleur != 'R') {
@@ -321,13 +321,13 @@ public class ABR<E> extends AbstractCollection<E> {
 					if(w.gauche.couleur != 'R') {
 						w.droit.couleur = 'N';
 						w.couleur = 'R';
-						rotationGauche(w);
+						this.rotationGauche(w);
 						w = x.pere.gauche;
 					}
 					w.couleur = x.pere.couleur;
 					x.pere.couleur = 'N';
 					w.gauche.couleur = 'N';
-					rotationDroite(x.pere);
+					this.rotationDroite(x.pere);
 					x = racine;
 				}
 			}
