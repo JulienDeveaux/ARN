@@ -129,7 +129,7 @@ public class ARN<E> extends AbstractCollection<E> {
 
 	@Override
 	public Iterator<E> iterator() {
-		return new ABRIterator();
+		return new ARNIterator();
 	}
 
 	@Override
