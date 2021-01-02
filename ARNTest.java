@@ -7,11 +7,11 @@ import java.util.Random;
 public class ARNTest {
 
 	public static void main(String[] args) {
-		//System.out.println("TEST RANDOM");testRandom();
-		//System.out.println("TEST 1");test1();
-		//System.out.println("TEST 2");test2();
-		//System.out.println("TEST 3");test3();
-		//System.out.println("TEST 4");test4();
+		System.out.println("TEST RANDOM");testRandom();
+		System.out.println("TEST 1");test1();
+		System.out.println("TEST 2");test2();
+		System.out.println("TEST 3");test3();
+		System.out.println("TEST 4");test4();
 	}
 
 	static void test1() {

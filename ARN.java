@@ -483,7 +483,7 @@ public class ARN<E> extends AbstractCollection<E> {
 		}
 
 		public void remove() {
-			this.courant = ABR.this.supprimer(courant);
+			this.courant = ARN.this.supprimer(courant);
 		}
 	}
 
