@@ -150,13 +150,13 @@ public class ARN<E> extends AbstractCollection<E> {
 		if(r == sentinelle || r == null) {
 			return 0;
 		}
-		int profondeurgauche = hauteur(r.gauche);
-		int profondeurdroit = hauteur(r.droit);
+		int hauteurgauche = hauteur(r.gauche);
+		int hauteurdroit = hauteur(r.droit);
 
-		if(profondeurgauche > profondeurdroit) {
-			return (profondeurgauche + 1);
+		if(hauteurgauche > hauteurdroit) {
+			return (hauteurgauche + 1);
 		} else {
-			return (profondeurdroit + 1);
+			return (hauteurdroit + 1);
 		}
 	}
 
@@ -480,7 +480,7 @@ public class ARN<E> extends AbstractCollection<E> {
 			E tmp;
 			if (courant == sentinelle){
 				return null;
-			}ARN
+			}
 			tmp = this.courant.cle;
 			this.courant = this.courant.suivant();
 
@@ -488,6 +488,7 @@ public class ARN<E> extends AbstractCollection<E> {
 		}
 
 		public void remove() {
+			this.courant = ABR.this.supprimer(courant);
 		}
 	}
 

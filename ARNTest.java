@@ -33,7 +33,7 @@ public class ARNTest {
 		//l.add(1200);
 		ARN<Integer> arn = new ARN<>(l);
 		System.out.println("taille : " + arn.size());
-		System.out.println("hauteur : " + arn.profondeur());
+		System.out.println("hauteur : " + arn.hauteur());
 		System.out.println(arn);
 
 		Iterator<Integer> it = arn.iterator();
@@ -61,7 +61,6 @@ public class ARNTest {
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
-		System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 
 	static void test2() {
