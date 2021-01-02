@@ -107,7 +107,7 @@ public class ARN<E> extends AbstractCollection<E> {
 	 */
 	public ARN(Comparator<? super E> cmp) {
 		sentinelle =  sentinelle();
-		racine = null;
+		racine = sentinelle;
 		this.cmp = cmp;
 	}
 
