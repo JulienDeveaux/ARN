@@ -61,7 +61,7 @@ public class ARNTest {
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
-	}
+}
 
 	static void test2() {
 		ARN<Integer> arn = new ARN<>();
