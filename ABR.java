@@ -1,5 +1,4 @@
 import java.util.*;
-import java.math.*;
 
 /**
  * <p>
@@ -156,17 +155,6 @@ public class ABR<E> extends AbstractCollection<E> {
 		int diametregauche = diametre(r.gauche);
 		int diametredroit = diametre(r.droit);
 		return Math.max(hauteurgauche + hauteurdroite + 1, Math.max(diametregauche, diametredroit));
-	}
-
-	public int hauteur() {
-		return hauteur(racine);
-	}
-
-	private int hauteur(Noeud r) {
-		if(r == sentinelle || r == null) {
-			return 0;
-		}
-		return (1 + Math.max(hauteur(r.gauche), hauteur(r.droit)));
 	}
 
 	public int profondeur() {
