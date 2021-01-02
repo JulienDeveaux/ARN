@@ -1,4 +1,5 @@
 import java.util.*;
+import java.math.*;
 
 /**
  * <p>
@@ -149,8 +150,8 @@ public class ABR<E> extends AbstractCollection<E> {
 		if(r == sentinelle || r == null) {
 			return 0;
 		}
-		int hauteurgauche = hauteur(r.gauche);
-		int hauteurdroite = hauteur(r.droit);
+		int hauteurgauche = profondeur(r.gauche);
+		int hauteurdroite = profondeur(r.droit);
 
 		int diametregauche = diametre(r.gauche);
 		int diametredroit = diametre(r.droit);

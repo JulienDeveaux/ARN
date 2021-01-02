@@ -104,7 +104,6 @@ public class ABRTest {
 		System.out.println(arn);
         System.out.println("taille (nb de noeuds) : " + arn.size());
         System.out.println("profondeur max de l'arbre : " + arn.profondeur());
-        System.out.println("hauteur : " + arn.hauteur());
         System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 
@@ -123,13 +122,11 @@ public class ABRTest {
         System.out.println(arn);
         System.out.println("taille (nb de noeuds) : " + arn.size());
         System.out.println("profondeur max de l'arbre : " + arn.profondeur());
-        System.out.println("hauteur : " + arn.hauteur());
         System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 		arn.remove(8);
         System.out.println(arn);
         System.out.println("taille (nb de noeuds) : " + arn.size());
         System.out.println("profondeur max de l'arbre : " + arn.profondeur());
-        System.out.println("hauteur : " + arn.hauteur());
         System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 
@@ -153,7 +150,6 @@ public class ABRTest {
         System.out.println(arn);
         System.out.println("taille (nb de noeuds) : " + arn.size());
         System.out.println("profondeur max de l'arbre : " + arn.profondeur());
-        System.out.println("hauteur : " + arn.hauteur());
         System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 
@@ -170,7 +166,6 @@ public class ABRTest {
 		System.out.println(arn);
         System.out.println("taille (nb de noeuds) : " + arn.size());
         System.out.println("profondeur max de l'arbre : " + arn.profondeur());
-        System.out.println("hauteur : " + arn.hauteur());
         System.out.println("diametre (chemin le plus long entre deux feuilles) : " + arn.diametre());
 	}
 }
