@@ -223,6 +223,7 @@ public class ABR<E> extends AbstractCollection<E> {
 	 *		 {@link Iterator#remove()}
 	 */
 	private Noeud supprimer(Noeud z) {
+		System.out.println(z.cle);
 		Noeud y = z;
 		Noeud x;
 		char yOriginal = y.couleur;
@@ -484,26 +485,25 @@ public class ABR<E> extends AbstractCollection<E> {
 		Noeud courant;
 
 		ABRIterator(){
-			Noeud courant = racine;
+			this.courant = racine;
 		}
 
 		public boolean hasNext() {
-			return courant != null;
+			return courant != sentinelle;
 		}
 
 		public E next() {
 			E tmp;
-			if (courant == null){
+			if (courant == sentinelle){
 				return null;
 			}
-			tmp = courant.cle;
-			this.courant.suivant();
+			tmp = this.courant.cle;
+			this.courant = this.courant.suivant();
 
 			return tmp;
 		}
 
 		public void remove() {
-			this.courant = ABR.this.supprimer(courant);
 		}
 	}
 
