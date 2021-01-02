@@ -129,7 +129,7 @@ public class ARN<E> extends AbstractCollection<E> {
 
 	@Override
 	public Iterator<E> iterator() {
-		return new ABRIterator();
+		return new ARNIterator();
 	}
 
 	@Override
@@ -143,20 +143,20 @@ public class ARN<E> extends AbstractCollection<E> {
 	}
 
 	public int hauteur() {
-		return profondeur(racine); 
+		return hauteur(racine);
 	}
 
 	private int hauteur(Noeud r) {
 		if(r == sentinelle || r == null) {
 			return 0;
 		}
-		int profondeurgauche = hauteur(r.gauche);
-		int profondeurdroit = hauteur(r.droit);
+		int hauteurgauche = hauteur(r.gauche);
+		int hauteurdroit = hauteur(r.droit);
 
-		if(profondeurgauche > profondeurdroit) {
-			return (profondeurgauche + 1);
+		if(hauteurgauche > hauteurdroit) {
+			return (hauteurgauche + 1);
 		} else {
-			return (profondeurdroit + 1);
+			return (hauteurdroit + 1);
 		}
 	}
 
@@ -359,7 +359,6 @@ public class ARN<E> extends AbstractCollection<E> {
 	private void ajouterCorrection(Noeud z) {
 		Noeud y;
 		while (z.pere.couleur == 'R') {
-			// (*) La seule propriété RN violée est (4) : z et z.pere sont rouges
 			if (z.pere == z.pere.pere.gauche) {
 				y = z.pere.pere.droit; // l'oncle de z
 				if (y.couleur == 'R') {
@@ -398,12 +397,8 @@ public class ARN<E> extends AbstractCollection<E> {
 					z.pere.pere.couleur = 'R';
 					rotationGauche(z.pere.pere);
 				}
-
-				// idem en miroir, gauche <-> droite
-				// cas 1', 2', 3'
 			}
 		}
-		// (**) La seule propriété (potentiellement) violée est (2)
 		racine.couleur = 'N';
 	}
 
@@ -480,7 +475,7 @@ public class ARN<E> extends AbstractCollection<E> {
 			E tmp;
 			if (courant == sentinelle){
 				return null;
-			}ARN
+			}
 			tmp = this.courant.cle;
 			this.courant = this.courant.suivant();
 
