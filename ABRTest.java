@@ -7,24 +7,30 @@ import java.util.Random;
 public class ABRTest {
 
 	public static void main(String[] args) {
-		System.out.println("TEST RANDOM");testRandom();
-		System.out.println("TEST 1");test1();
-		System.out.println("TEST 2");test2();
-		System.out.println("TEST 3");test3();
-		System.out.println("TEST 4");test4();
-        System.out.println("CUSTOM");
+		//System.out.println("TEST RANDOM");testRandom();
+		//System.out.println("TEST 1");test1();
+		//System.out.println("TEST 2");test2();
+		//System.out.println("TEST 3");test3();
+		//System.out.println("TEST 4");test4();
+        //System.out.println("CUSTOM");
         ABR<Integer> arn = new ABR<>();
         arn.add(1);
-        System.out.println(arn);
+        //System.out.println(arn);
         arn.add(2);
-        System.out.println(arn);
+        //System.out.println(arn);
         arn.add(0);
-        System.out.println(arn);
+        //System.out.println(arn);
         arn.add(3);
-        System.out.println(arn);
+        //System.out.println(arn);
         arn.add(4);
-        System.out.println(arn);
+        //System.out.println(arn);
         arn.add(1);
+        //System.out.println(arn);
+        arn.add(-1);
+        //System.out.println(arn);
+        arn.add(-2);
+        System.out.println(arn);
+        arn.remove(-2);
         System.out.println(arn);
     }
 
@@ -54,7 +60,6 @@ public class ABRTest {
 
 		while (it.hasNext()) {
 			int cle = it.next();
-            System.out.println("DANS LE WHILE");
 			if (cle % 2 == 0) {
 				System.out.println("Supprimons " + cle + " dont le suivant est :");
 				it.remove();
@@ -62,20 +67,14 @@ public class ABRTest {
 				System.out.println(arn);
 			}
 		}
-		System.out.println("SORTI DU WHILE");
-		System.out.println("taille : " + arn.size());
 		System.out.println(arn);
 		arn.remove(5);
-		System.out.println("taille : " + arn.size());
 		System.out.println(arn);
 		arn.remove(501);
-		System.out.println("taille : " + arn.size());
 		System.out.println(arn);
 		arn.remove(9);
-		System.out.println("taille : " + arn.size());
 		System.out.println(arn);
 		arn.remove(1);
-		System.out.println("taille : " + arn.size());
 		System.out.println(arn);
 		arn.remove(-3);
         System.out.println(arn);
