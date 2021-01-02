@@ -467,10 +467,11 @@ public class ABR<E> extends AbstractCollection<E> {
 	@Override
 	public boolean addAll(Collection<? extends E> c)
 	{
-		for( E e : c )
-			if( !this.add(e) )
-				return false;
-
+		Iterator it = c.iterator();
+		while(it.hasNext()) {
+			E t = (E)it.next();
+			this.add(t);
+		}
 		return true;
 	}
 

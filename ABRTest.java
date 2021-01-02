@@ -32,6 +32,19 @@ public class ABRTest {
         System.out.println(arn);
         arn.remove(-2);
         System.out.println(arn);
+        ArrayList<Integer> l = new ArrayList<>();
+		//ARN<Integer> abr = new ARN<>();
+		l.add(5);
+		l.add(8);
+		l.add(2);
+		l.add(9);
+		l.add(0);
+		l.add(1);
+		l.add(2000);
+		arn.addAll(l);
+        System.out.println("ajout liste");
+        System.out.println(arn);
+
     }
 
 	static void test1() {
