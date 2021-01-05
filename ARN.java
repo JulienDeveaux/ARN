@@ -51,6 +51,14 @@ public class ARN<E> extends AbstractCollection<E> {
 			return x;
 		}
 
+
+		Noeud minimum(Noeud x) {
+			while (x.gauche != sentinelle) {
+				x = x.gauche;
+			}
+			return x;
+		}
+
 		/**
 		 * Renvoie le successeur de ce noeud
 		 *
@@ -219,33 +227,23 @@ public class ARN<E> extends AbstractCollection<E> {
 			x = z.gauche;
 			this.echange(z, z.gauche);
 		} else {
-			System.out.println("ELSE : ");
-			System.out.println(this);
-			y = z.suivant();
+			y = z.minimum(z.droit);
 			yOriginal = y.couleur;
 			x = y.droit;
 
 			if(y.pere == z) {
 				x.pere = y;
 			} else {
-			System.out.println("ELSE ELSE : ");
-			System.out.println(this);
 				this.echange(y, y.droit);
-			System.out.println("ELSE ELSE APE: ");
-			System.out.println(this);
 				y.droit = z.droit;
 				y.droit.pere = y;
 			}
-			System.out.println("APELSE : ");
-			System.out.println(this);
 			this.echange(z, y);
 			y.gauche = z.gauche;
 			y.gauche.pere = y;
 			y.couleur = z.couleur;
 		}
-		if(yOriginal == 'R') {
-			System.out.println("AVFIX : ");
-			System.out.println(this);
+		if(yOriginal == 'N') {
 			this.supprimerfix(x);
 		}
 
@@ -314,7 +312,7 @@ public class ARN<E> extends AbstractCollection<E> {
 					w.couleur = x.pere.couleur;
 					x.pere.couleur = 'N';
 					w.gauche.couleur = 'N';
-					this.rotationDroite(x.pere);
+					rotationDroite(x.pere);
 					x = racine;
 				}
 			}
@@ -475,28 +473,26 @@ public class ARN<E> extends AbstractCollection<E> {
 	 */
 	private class ARNIterator implements Iterator<E> {
 		Noeud courant;
+		Noeud suivant;
 
-		ARNIterator(){
-			this.courant = racine;
+		public ARNIterator(){
+			super();
+			this.courant = ARN.this.sentinelle;
+			this.suivant = ARN.this.racine.minimum();
 		}
 
 		public boolean hasNext() {
-			return courant != sentinelle;
+			return suivant != sentinelle;
 		}
 
 		public E next() {
-			E tmp;
-			if (courant == sentinelle){
-				return null;
-			}
-			tmp = this.courant.cle;
-			this.courant = this.courant.suivant();
-
-			return tmp;
+			this.courant = this.suivant;
+			this.suivant = this.suivant.suivant();
+			return this.courant.cle;
 		}
 
 		public void remove() {
-			this.courant = ARN.this.supprimer(courant);
+			this.suivant = ARN.this.supprimer(this.courant);
 		}
 	}
 
@@ -540,7 +536,7 @@ public class ARN<E> extends AbstractCollection<E> {
 
 	private int maxStrLen(Noeud x) {
 		return x == sentinelle ? 0 : Math.max(x.cle.toString().length(),
-				Math.max(maxStrLen(x.gauche), maxStrLen(x.droit)));
+			Math.max(maxStrLen(x.gauche), maxStrLen(x.droit)));
 	}
 
 	// TODO : voir quelles autres méthodes il faut surcharger
