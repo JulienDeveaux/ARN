@@ -9,10 +9,10 @@ public class ARNTest {
 	public static void main(String[] args) {
 		System.out.println("TEST RANDOM");testRandom();
 		System.out.println("TEST 1 : Itérateur");test1();
-		//System.out.println("TEST 2 : Valeur positif en double");test2();
+		System.out.println("TEST 2 : Valeur positif en double");test2();
 		System.out.println("TEST 3 : Valeur positif");test3();
-		//System.out.println("TEST 4 : Positif et négatif");test4();
-		//System.out.println("TEST 5 : Arbre équilibré");test5();
+		System.out.println("TEST 4 : Positif et négatif");test4();
+		System.out.println("TEST 5 : Arbre équilibré");test5();
 	}
 
 	static void test1() {
@@ -39,23 +39,12 @@ public class ARNTest {
 
 		while (it.hasNext()) {
 			int cle = it.next();
-			System.out.println("CLE WHILE : "+cle);
 			if (cle % 2 == 0) {
 				it.remove();
 				System.out.println("taille : " + arn.size());
 				System.out.println(arn);
 			}
 		}
-		arn.remove(5);
-		System.out.println(arn);
-		arn.remove(501);
-		System.out.println(arn);
-		arn.remove(9);
-		System.out.println(arn);
-		arn.remove(1);
-		System.out.println(arn);
-		arn.remove(-3);
-		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
 }
@@ -80,8 +69,6 @@ public class ARNTest {
 		arn.remove(22);
 		System.out.println(arn);
 		arn.remove(6);
-		System.out.println(arn);
-		arn.remove(8);
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
