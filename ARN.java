@@ -207,7 +207,7 @@ public class ARN<E> extends AbstractCollection<E> {
 	 *		 {@link Iterator#remove()}
 	 */
 	private Noeud supprimer(Noeud z) {
-		System.out.println(z.cle);
+		System.out.println("Clé à supprimer : "+z.cle);
 		Noeud y = z;
 		Noeud x;
 		char yOriginal = y.couleur;
@@ -219,6 +219,8 @@ public class ARN<E> extends AbstractCollection<E> {
 			x = z.gauche;
 			this.echange(z, z.gauche);
 		} else {
+			System.out.println("ELSE : ");
+			System.out.println(this);
 			y = z.suivant();
 			yOriginal = y.couleur;
 			x = y.droit;
@@ -226,18 +228,27 @@ public class ARN<E> extends AbstractCollection<E> {
 			if(y.pere == z) {
 				x.pere = y;
 			} else {
+			System.out.println("ELSE ELSE : ");
+			System.out.println(this);
 				this.echange(y, y.droit);
+			System.out.println("ELSE ELSE APE: ");
+			System.out.println(this);
 				y.droit = z.droit;
 				y.droit.pere = y;
 			}
+			System.out.println("APELSE : ");
+			System.out.println(this);
 			this.echange(z, y);
 			y.gauche = z.gauche;
 			y.gauche.pere = y;
 			y.couleur = z.couleur;
 		}
 		if(yOriginal == 'R') {
+			System.out.println("AVFIX : ");
+			System.out.println(this);
 			this.supprimerfix(x);
 		}
+
 		return z.suivant();
 	}
 
@@ -255,20 +266,21 @@ public class ARN<E> extends AbstractCollection<E> {
 	private void supprimerfix(Noeud x) {
 		Noeud w;
 
-		while(x != racine && x.couleur != 'R') {
+		while(x != racine && x.couleur == 'N') {
 			if(x == x.pere.gauche) {
 				w = x.pere.droit;
 				if(w.couleur == 'R') {
 					w.couleur = 'N';
 					x.pere.couleur = 'R';
-					this.rotationDroite(x.pere);
+					this.rotationGauche(x.pere);
 					w = x.pere.droit;
 				}
 				if(w.gauche.couleur == 'N' && w.droit.couleur =='N') {
 					w.couleur = 'R';
+					x.pere.couleur = 'N';
 					x = x.pere;
 				} else {
-					if(w.droit.couleur != 'R') {
+					if(w.droit.couleur == 'N') {
 						w.gauche.couleur = 'N';
 						w.couleur = 'R';
 						this.rotationDroite(w);
@@ -284,15 +296,16 @@ public class ARN<E> extends AbstractCollection<E> {
 				w = x.pere.gauche;
 				if(w.couleur == 'R') {
 					w.couleur = 'N';
-					x.pere.couleur = 'R';
+					x.pere.couleur = 'N';
 					this.rotationDroite(x.pere);
 					w = x.pere.gauche;
 				}
-				if(w.gauche.couleur != 'R' && w.droit.couleur != 'R') {
+				if(w.gauche.couleur == 'N' && w.droit.couleur == 'N') {
 					w.couleur = 'R';
+					x.pere.couleur = 'N';
 					x = x.pere;
 				} else {
-					if(w.gauche.couleur != 'R') {
+					if(w.gauche.couleur == 'N') {
 						w.droit.couleur = 'N';
 						w.couleur = 'R';
 						this.rotationGauche(w);
