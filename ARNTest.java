@@ -8,16 +8,16 @@ public class ARNTest {
 
 	public static void main(String[] args) {
 		System.out.println("TEST RANDOM");testRandom();
-		System.out.println("TEST 1");test1();
-		System.out.println("TEST 2");test2();
-		System.out.println("TEST 3");test3();
-		System.out.println("TEST 4");test4();
+		System.out.println("TEST 1 : Itérateur");test1();
+		//System.out.println("TEST 2 : Valeur positif en double");test2();
+		System.out.println("TEST 3 : Valeur positif");test3();
+		//System.out.println("TEST 4 : Positif et négatif");test4();
+		//System.out.println("TEST 5 : Arbre équilibré");test5();
 	}
 
 	static void test1() {
 
 		ArrayList<Integer> l = new ArrayList<>();
-		//ARN<Integer> abr = new ARN<>();
 		l.add(5);
 		l.add(8);
 		l.add(2);
@@ -30,7 +30,6 @@ public class ARNTest {
 		l.add(-2000);
 		l.add(500);
 		l.add(501);
-		//l.add(1200);
 		ARN<Integer> arn = new ARN<>(l);
 		System.out.println("taille : " + arn.size());
 		System.out.println("hauteur : " + arn.hauteur());
@@ -42,13 +41,11 @@ public class ARNTest {
 			int cle = it.next();
 			System.out.println("CLE WHILE : "+cle);
 			if (cle % 2 == 0) {
-				System.out.println("Supprimons " + cle + " dont le suivant est : "+it.next());
-				//it.remove();
+				it.remove();
 				System.out.println("taille : " + arn.size());
 				System.out.println(arn);
 			}
 		}
-		System.out.println(arn);
 		arn.remove(5);
 		System.out.println(arn);
 		arn.remove(501);
@@ -75,12 +72,16 @@ public class ARNTest {
 		arn.add(6);
 		arn.add(22);
 		arn.add(27);
+		arn.add(27);
+		arn.add(11);
 		System.out.println(arn);
 		arn.remove(17);
 		System.out.println(arn);
 		arn.remove(22);
 		System.out.println(arn);
-		arn.remove(25);
+		arn.remove(6);
+		System.out.println(arn);
+		arn.remove(8);
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
@@ -142,5 +143,24 @@ public class ARNTest {
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
+	}
+
+	static void test5(){
+		ARN<Integer> arn = new ARN<>();
+		arn.add(15);
+		System.out.println(arn);
+		arn.add(25);
+		System.out.println(arn);
+		arn.add(5);
+		System.out.println(arn);
+		arn.add(10);
+		System.out.println(arn);
+		arn.add(20);
+		System.out.println(arn);
+		arn.add(2);
+		System.out.println(arn);
+		arn.add(27);
+		System.out.println(arn);
+
 	}
 }

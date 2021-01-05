@@ -1,6 +1,6 @@
 import java.util.*;
 import java.math.*;
-
+//Code réalisé en binôme : Deveaux Julien et Lemesle Justine.
 /**
  * <p>
  * Implantation de l'interface Collection basée sur les arbres binaires de
