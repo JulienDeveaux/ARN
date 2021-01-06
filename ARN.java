@@ -1,5 +1,4 @@
 import java.util.*;
-import java.math.*;
 //Code réalisé en binôme : Deveaux Julien et Lemesle Justine.
 /**
  * <p>
@@ -491,7 +490,7 @@ public class ARN<E> extends AbstractCollection<E> {
 		}
 
 		public boolean hasNext() {
-			return suivant != sentinelle;
+			return suivant != ARN.this.sentinelle;
 		}
 
 		public E next() {

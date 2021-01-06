@@ -1,148 +1,168 @@
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Random;
-
+//Code réalisé en binôme : Deveaux Julien et Lemesle Justine.
 
 
 public class ARNTest {
 
 	public static void main(String[] args) {
-		//System.out.println("TEST RANDOM");testRandom();
-		//System.out.println("TEST 1 : Itérateur");test1();
-		System.out.println("TEST 2 : Valeur positif en double");test2();
-		//System.out.println("TEST 3 : Valeur positif");test3();
-		//System.out.println("TEST 4 : Positif et négatif");test4();
-		//System.out.println("TEST 5 : Arbre équilibré");test5();
+		System.out.println("Ajout et suppresion");AjoutSuppressionContains();
+		System.out.println("Création d'un arbre grâce à une liste");ArbreParListe();
+		System.out.println("Test de l'itérateur");IteratorTest();
+		System.out.println("Test avec des valeurs négatives");negatif();
+		System.out.println("test addAll");testAddAll();
+		System.out.println("TEST 5 : Arbre équilibré");testCR();
+		System.out.println("Génération et suppresion de nombres aléatoires");TestAlea();
 	}
 
-	static void test1() {
 
-		ArrayList<Integer> l = new ArrayList<>();
-		l.add(5);
-		l.add(8);
-		l.add(2);
-		l.add(9);
-		l.add(-2);
-		l.add(-3);
-		l.add(0);
-		l.add(1);
-		l.add(2000);
-		l.add(-2000);
-		l.add(500);
-		l.add(501);
-		ARN<Integer> arn = new ARN<>(l);
+	static void AjoutSuppressionContains(){
+		ARN<Integer> arn = new ARN<>();
+
+		arn.add(34);
+		arn.add(56);
+		arn.add(76);
+		arn.add(22);
+		arn.add(0);
+		arn.add(80);
+		arn.add(79);
+		arn.add(135);
+		// Ajout de deux fois la même clé
+		arn.add(56);
+		System.out.println(arn);
+		System.out.println("Suppression du noeud 80 : ");
+		arn.remove(80);
+		System.out.println(arn);
+		System.out.println("Suppression de la clé inexistante 3 : ");
+		arn.remove(3);
+		System.out.println(arn);
+		if(arn.contains(79)) {
+			System.out.println("Noeud 79 trouvé");
+		} else {
+			System.out.println("Noeud 79 non trouvé");
+		}
+		if(arn.contains(22)) {
+			System.out.println("Racine 22 trouvé");
+		} else {
+			System.out.println("Racine 22 non trouvé");
+		}
+		if(arn.contains((3))) {
+			System.out.println("Noeud 3 (non présent) trouvé");
+		} else {
+			System.out.println(("Noeud 3 (non présent) non trouvé"));
+		}
+	}
+	static void ArbreParListe() {
+		ArrayList<Integer> liste = new ArrayList<>();
+		liste.add(5);
+		liste.add(8);
+		liste.add(2);
+		liste.add(9);
+		liste.add(-2);
+		liste.add(-3);
+		liste.add(0);
+		liste.add(1);
+		liste.add(2000);
+		liste.add(-2000);
+		liste.add(500);
+		liste.add(501);
+		ARN<Integer> arn = new ARN<>(liste);
 		System.out.println("taille : " + arn.size());
 		System.out.println("hauteur : " + arn.hauteur());
 		System.out.println(arn);
+	}
+
+	static void IteratorTest() {
+		ARN<Integer> arn = new ARN<>();
+		arn.add(1);
+		arn.add(2);
+		arn.add(3);
+		arn.add(4);
+		arn.add(5);
+		arn.add(6);
+		arn.add(7);
+		arn.add(8);
+		arn.add(9);
+		arn.add(10);
+		System.out.println(arn);
 
 		Iterator<Integer> it = arn.iterator();
+		int cle;
 
-		while (it.hasNext()) {
-			int cle = it.next();
-			if (cle % 2 == 0) {
-				it.remove();
-				System.out.println("taille : " + arn.size());
-				System.out.println(arn);
-			}
+		if(it.hasNext()) {
+			cle = it.next();
+			System.out.println("Suppression de la première valeur de l'itérateur : " + cle);
+			it.remove();
 		}
+		while (it.hasNext()) {
+			cle = it.next();
+			System.out.println("Clé renvoyée par l'itérateur : " + cle);
+		}
+		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
 }
 
-	static void test2() {
-		ARN<Integer> arn = new ARN<>();
-		arn.add(13);
-		arn.add(8);
-		arn.add(17);
-		arn.add(1);
-		arn.add(11);
-		arn.add(15);
-		arn.add(25);
-		arn.add(6);
-		arn.add(22);
-		arn.add(27);
-		arn.add(27);
-		arn.add(11);
-		System.out.println(arn);
-		arn.remove(17);
-		System.out.println(arn);
-		arn.remove(22);
-		System.out.println(arn);
-		arn.remove(6);
-		System.out.println(arn);
-		System.out.println("taille (nb de noeuds) : " + arn.size());
-		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
-		if(arn.contains(11)) {
-			System.out.println("L'arbre contient bien 11");
-		} else {
-			System.out.println("L'arbre contient pas 11");
-		}
-		if(!arn.contains(12)) {
-			System.out.println("L'arbre ne contient pas 12");
-		} else {
-			System.out.println("L'arbre ne contient bien 12");
-		}
-	}
-
-	static void test3() {
-		ARN<Integer> arn = new ARN<>();
-		arn.add(13);
-		arn.add(8);
-		arn.add(17);
-		arn.add(1);
-		arn.add(11);
-		arn.add(15);
-		arn.add(25);
-		arn.add(6);
-		arn.add(22);
-		arn.add(27);
-		System.out.println(arn);
-		System.out.println("taille (nb de noeuds) : " + arn.size());
-		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
-		arn.remove(8);
-		System.out.println(arn);
-		System.out.println("taille (nb de noeuds) : " + arn.size());
-		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
-	}
-
-	static void test4() {
+	static void negatif() {
 		ARN<Integer> arn = new ARN<>();
 		arn.add(0);
-		System.out.println(arn);
-		arn.add(-1);
-		System.out.println(arn);
-		arn.add(-2);
-		System.out.println(arn);
-		arn.add(-3);
-		System.out.println(arn);
 		arn.add(1);
-		System.out.println(arn);
+		arn.add(-1);
 		arn.add(2);
-		System.out.println(arn);
+		arn.add(-2);
 		arn.add(3);
+		arn.add(-3);
+		arn.add(4);
+		arn.add(-4);
 		System.out.println(arn);
-		arn.remove(-1);       //enlève tout
+		System.out.println("taille (nb de noeuds) : " + arn.size());
+		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
+		System.out.println("Suppression de la clé -2");
+		arn.remove(-2);
+		System.out.println(arn);
+		System.out.println("Suppression de la clé 2");
+		arn.remove(2);
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
 	}
 
-	static void testRandom() {
+	static void TestAlea() {
 		ARN<Integer> arn = new ARN<>();
 		Random r = new Random();
 		for(int i = 0; i < 10; i++) {
-			arn.add(r.nextInt(200));
+			arn.add(r.nextInt(50));
 		}
+		System.out.println("Suppression");
 		System.out.println(arn);
 		for(int i = 0; i < 10; i++) {
-			arn.remove(r.nextInt(200));
+			arn.remove(r.nextInt(50));
 		}
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
 	}
 
-	static void test5(){
+	static void testAddAll() {
+		ARN<Integer> arn = new ARN<>();
+		arn.add(1);
+		arn.add(2);
+		System.out.println("Arbre initial :");
+		System.out.println(arn);
+		System.out.println("Création d'une liste avec 3, 4, 5, 6, -1 à l'intérieur puis ajout de cette liste dans notre arbre :");
+		ArrayList<Integer> liste = new ArrayList<>();
+		liste.add(3);
+		liste.add(4);
+		liste.add(5);
+		liste.add(6);
+		liste.add(-1);
+		arn.addAll(liste);
+		System.out.println("Arbre résultant :");
+		System.out.println(arn);
+	}
+
+	static void testCR(){
 		ARN<Integer> arn = new ARN<>();
 		arn.add(15);
 		System.out.println(arn);
