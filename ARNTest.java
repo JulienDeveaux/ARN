@@ -8,12 +8,20 @@ public class ARNTest {
 
 	public static void main(String[] args) {
 		System.out.println("Ajout et suppresion");AjoutSuppressionContains();
+		System.out.println("-------------------------------------------------------");
 		System.out.println("Création d'un arbre grâce à une liste");ArbreParListe();
+		System.out.println("-------------------------------------------------------");
 		System.out.println("Test de l'itérateur");IteratorTest();
+		System.out.println("-------------------------------------------------------");
 		System.out.println("Test avec des valeurs négatives");negatif();
+		System.out.println("-------------------------------------------------------");
 		System.out.println("test addAll");testAddAll();
+		System.out.println("-------------------------------------------------------");
 		System.out.println("TEST 5 : Arbre équilibré");testCR();
+		System.out.println("-------------------------------------------------------");
 		System.out.println("Génération et suppresion de nombres aléatoires");TestAlea();
+		System.out.println("-------------------------------------------------------");
+
 	}
 
 
@@ -34,6 +42,9 @@ public class ARNTest {
 		System.out.println("Suppression du noeud 80 : ");
 		arn.remove(80);
 		System.out.println(arn);
+		System.out.println("Suppression de la feuille 135 : ");
+		arn.remove(135);
+		System.out.println(arn);
 		System.out.println("Suppression de la clé inexistante 3 : ");
 		arn.remove(3);
 		System.out.println(arn);
@@ -42,10 +53,10 @@ public class ARNTest {
 		} else {
 			System.out.println("Noeud 79 non trouvé");
 		}
-		if(arn.contains(22)) {
-			System.out.println("Racine 22 trouvé");
+		if(arn.contains(56)) {
+			System.out.println("Racine 56 trouvé");
 		} else {
-			System.out.println("Racine 22 non trouvé");
+			System.out.println("Racine 56 non trouvé");
 		}
 		if(arn.contains((3))) {
 			System.out.println("Noeud 3 (non présent) trouvé");
@@ -118,27 +129,11 @@ public class ARNTest {
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
-		System.out.println("Suppression de la clé -2");
-		arn.remove(-2);
+		System.out.println("Suppression de la clé -1");
+		arn.remove(-1);
 		System.out.println(arn);
-		System.out.println("Suppression de la clé 2");
-		arn.remove(2);
-		System.out.println(arn);
-		System.out.println("taille (nb de noeuds) : " + arn.size());
-		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
-	}
-
-	static void TestAlea() {
-		ARN<Integer> arn = new ARN<>();
-		Random r = new Random();
-		for(int i = 0; i < 10; i++) {
-			arn.add(r.nextInt(50));
-		}
-		System.out.println("Suppression");
-		System.out.println(arn);
-		for(int i = 0; i < 10; i++) {
-			arn.remove(r.nextInt(50));
-		}
+		System.out.println("Suppression de la clé -4");
+		arn.remove(-4);
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
@@ -165,19 +160,28 @@ public class ARNTest {
 	static void testCR(){
 		ARN<Integer> arn = new ARN<>();
 		arn.add(15);
-		System.out.println(arn);
 		arn.add(25);
-		System.out.println(arn);
 		arn.add(5);
-		System.out.println(arn);
 		arn.add(10);
-		System.out.println(arn);
 		arn.add(20);
-		System.out.println(arn);
 		arn.add(2);
-		System.out.println(arn);
 		arn.add(27);
 		System.out.println(arn);
+	}
 
+	static void TestAlea() {
+		ARN<Integer> arn = new ARN<>();
+		Random r = new Random();
+		for(int i = 0; i < 10; i++) {
+			arn.add(r.nextInt(50));
+		}
+		System.out.println("Suppression");
+		System.out.println(arn);
+		for(int i = 0; i < 10; i++) {
+			arn.remove(r.nextInt(50));
+		}
+		System.out.println(arn);
+		System.out.println("taille (nb de noeuds) : " + arn.size());
+		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
 	}
 }

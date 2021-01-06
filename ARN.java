@@ -224,109 +224,108 @@ public class ARN<E> extends AbstractCollection<E> {
 	 */
 	private Noeud supprimer(Noeud z) {
 		System.out.println("Clé à supprimer : "+z.cle);
-		Noeud y = z;
-		Noeud x;
-		char yOriginal = y.couleur;
+		if(z == sentinelle) {
+			return sentinelle;
+		}
+		if(z == racine) {
+			racine = sentinelle;
+			return sentinelle;
+		}
+		if(z.couleur == 'R' || z.gauche.couleur == 'R' || z.droit.couleur == 'R') {
+			Noeud e = z.gauche != sentinelle ? z.gauche : z.droit;
 
-		if(z.gauche == sentinelle) {
-			x = z.droit;
-			this.echange(z, z.droit);
-		} else if(z.droit == sentinelle) {
-			x = z.gauche;
-			this.echange(z, z.gauche);
-		} else {
-			y = z.minimum(z.droit);
-			yOriginal = y.couleur;
-			x = y.droit;
-
-			if(y.pere == z) {
-				x.pere = y;
+			if(z == z.pere.gauche) {
+				z.pere.gauche = e;
+				if(e != sentinelle) {
+					e.pere = z.pere;
+				}
+				e.couleur = 'N';
+				//delete(z);
 			} else {
-				this.echange(y, y.droit);
-				y.droit = z.droit;
-				y.droit.pere = y;
+				z.pere.droit = e;
+				if(e != sentinelle) {
+					e.pere = z.pere;
+				}
+				e.couleur = 'N';
+				//delete(z);
 			}
-			this.echange(z, y);
-			y.gauche = z.gauche;
-			y.gauche.pere = y;
-			y.couleur = z.couleur;
+		} else {
+			Noeud s = sentinelle;
+			Noeud pere = sentinelle;
+			Noeud ptr = z;
+			ptr.couleur = 'D';		// D pour Double Noir
+			while(ptr != racine && ptr.couleur == 'D') {
+				pere = pere.gauche;
+				if(ptr == pere.gauche) {
+					s = pere.droit;
+					if(s.couleur == 'R') {
+						s.couleur = 'N';
+						pere.couleur = 'R';
+						rotationGauche(pere);
+					} else {
+						if(s.gauche.couleur == 'N' && s.droit.couleur == 'N') {
+							s.couleur = 'R';
+							if(pere.couleur == 'R') {
+								pere.couleur = 'N';
+							} else {
+								pere.couleur = 'D';
+							}
+							ptr = pere;
+						} else {
+							if(s.droit.couleur == 'N') {
+								s.gauche.couleur = 'N';
+								s.couleur = 'R';
+								rotationDroite(s);
+								s = pere.droit;
+							}
+							s.couleur = pere.couleur;
+							pere.couleur = 'N';
+							s.droit.couleur = 'N';
+							rotationGauche(pere);
+							break;
+						}
+					}
+				} else {
+					s = pere.gauche;
+					if(s.couleur == 'R') {
+						s.couleur = 'N';
+						pere.couleur = 'R';
+						rotationDroite(pere);
+					} else {
+						if(s.gauche.couleur == 'N' && s.droit.couleur == 'N') {
+							s.couleur = 'R';
+							if(pere.couleur == 'R') {
+								pere.couleur = 'N';
+							} else {
+								pere.couleur = 'D';
+							}
+							ptr = pere;
+						} else {
+							if(s.gauche.couleur == 'N') {
+								s.droit.couleur = 'N';
+								s.couleur = 'R';
+								s = pere.gauche;
+							}
+							s.couleur = pere.couleur;
+							pere.couleur = 'N';
+							s.gauche.couleur = 'N';
+							rotationDroite(pere);
+							break;
+						}
+					}
+				}
+			}
+			if (z == z.pere.gauche) {
+				z.pere.gauche = sentinelle;
+			} else {
+				z.pere.droit = sentinelle;
+			}
+			//delete(z);
+			racine.couleur = 'N';
 		}
-		if(yOriginal == 'N') {
-			this.supprimerfix(x);
-		}
-
 		return z.suivant();
 	}
 
-	private void echange(Noeud x, Noeud y) {
-		if(x.pere == sentinelle) {
-			this.racine = y;
-		} else if (x == x.pere.gauche) {
-			x.pere.gauche = y;
-		} else {
-			x.pere.droit = y;
-		}
-		y.pere = x.pere;
-	}
-
-	private void supprimerfix(Noeud x) {
-		Noeud w;
-
-		while(x != racine && x.couleur == 'N') {
-			if(x == x.pere.gauche) {
-				w = x.pere.droit;
-				if(w.couleur == 'R') {
-					w.couleur = 'N';
-					x.pere.couleur = 'R';
-					this.rotationGauche(x.pere);
-					w = x.pere.droit;
-				}
-				if(w.gauche.couleur == 'N' && w.droit.couleur =='N') {
-					w.couleur = 'R';
-					x.pere.couleur = 'N';
-					x = x.pere;
-				} else {
-					if(w.droit.couleur == 'N') {
-						w.gauche.couleur = 'N';
-						w.couleur = 'R';
-						this.rotationDroite(w);
-						w = x.pere.droit;
-					}
-					w.couleur = x.pere.couleur;
-					x.pere.couleur = 'N';
-					w.droit.couleur = 'N';
-					this.rotationGauche(x.pere);
-					x = racine;
-				}
-			} else {
-				w = x.pere.gauche;
-				if(w.couleur == 'R') {
-					w.couleur = 'N';
-					x.pere.couleur = 'N';
-					this.rotationDroite(x.pere);
-					w = x.pere.gauche;
-				}
-				if(w.gauche.couleur == 'N' && w.droit.couleur == 'N') {
-					w.couleur = 'R';
-					x.pere.couleur = 'N';
-					x = x.pere;
-				} else {
-					if(w.gauche.couleur == 'N') {
-						w.droit.couleur = 'N';
-						w.couleur = 'R';
-						this.rotationGauche(w);
-						w = x.pere.gauche;
-					}
-					w.couleur = x.pere.couleur;
-					x.pere.couleur = 'N';
-					w.gauche.couleur = 'N';
-					rotationDroite(x.pere);
-					x = racine;
-				}
-			}
-		}
-		x.couleur = 'N';
-	}
 
 	private Noeud sentinelle(){
 		Noeud s = new Noeud(null);
