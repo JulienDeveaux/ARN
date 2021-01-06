@@ -169,6 +169,15 @@ public class ARN<E> extends AbstractCollection<E> {
 	}
 
 	@Override
+	public boolean contains(Object o) {
+		if(this.rechercher(o) == sentinelle) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	@Override
 	public boolean remove(Object o)
 	{
 		Noeud t = this.rechercher((E)o);

@@ -7,12 +7,12 @@ import java.util.Random;
 public class ARNTest {
 
 	public static void main(String[] args) {
-		System.out.println("TEST RANDOM");testRandom();
-		System.out.println("TEST 1 : Itérateur");test1();
+		//System.out.println("TEST RANDOM");testRandom();
+		//System.out.println("TEST 1 : Itérateur");test1();
 		System.out.println("TEST 2 : Valeur positif en double");test2();
-		System.out.println("TEST 3 : Valeur positif");test3();
-		System.out.println("TEST 4 : Positif et négatif");test4();
-		System.out.println("TEST 5 : Arbre équilibré");test5();
+		//System.out.println("TEST 3 : Valeur positif");test3();
+		//System.out.println("TEST 4 : Positif et négatif");test4();
+		//System.out.println("TEST 5 : Arbre équilibré");test5();
 	}
 
 	static void test1() {
@@ -72,6 +72,16 @@ public class ARNTest {
 		System.out.println(arn);
 		System.out.println("taille (nb de noeuds) : " + arn.size());
 		System.out.println("hauteur max de l'arbre : " + arn.hauteur());
+		if(arn.contains(11)) {
+			System.out.println("L'arbre contient bien 11");
+		} else {
+			System.out.println("L'arbre contient pas 11");
+		}
+		if(!arn.contains(12)) {
+			System.out.println("L'arbre ne contient pas 12");
+		} else {
+			System.out.println("L'arbre ne contient bien 12");
+		}
 	}
 
 	static void test3() {
